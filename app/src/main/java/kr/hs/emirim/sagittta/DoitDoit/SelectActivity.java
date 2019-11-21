@@ -65,6 +65,7 @@ public class SelectActivity extends AppCompatActivity {
         sRecyclerView.addItemDecoration(dividerItemDecoration);
 
         Button btAddSubject = (Button) findViewById(R.id.btAddSubject);
+        //TODO 과목 입력받는 팝업창 띄우기
         btAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
