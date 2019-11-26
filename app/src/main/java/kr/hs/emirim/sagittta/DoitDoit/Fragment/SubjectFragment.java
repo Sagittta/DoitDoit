@@ -1,10 +1,4 @@
-package kr.hs.emirim.sagittta.DoitDoit;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
+package kr.hs.emirim.sagittta.DoitDoit.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,74 +6,57 @@ import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.material.tabs.TabLayout;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class SelectActivity extends AppCompatActivity {
+import kr.hs.emirim.sagittta.DoitDoit.R;
+import kr.hs.emirim.sagittta.DoitDoit.RecyclerAdapter;
+import kr.hs.emirim.sagittta.DoitDoit.SelectActivity;
+import kr.hs.emirim.sagittta.DoitDoit.Subjects;
 
-    private TabLayout sTabLayout;
+public class SubjectFragment extends Fragment {
 
     private ArrayList<Subjects> sList;
     private RecyclerAdapter sAdapter;
     private int count = -1;
 
-    private ViewPager sViewPager;
-    private ContentsPagerAdapter sContentPagerAdapter;
-
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select);
-        
-        this.sTabLayout = findViewById(R.id.tabLayout);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        sTabLayout.addTab(sTabLayout.newTab().setText("과목"));
-        sTabLayout.addTab(sTabLayout.newTab().setText("분량"));
-        sTabLayout.addTab(sTabLayout.newTab().setText("날짜"));
+        View v = inflater.inflate(R.layout.fragment_subject, container, false);
 
-        sViewPager = (ViewPager) findViewById(R.id.pager_content);
-        sContentPagerAdapter = new ContentsPagerAdapter(getSupportFragmentManager(), sTabLayout.getTabCount());
-        sViewPager.setAdapter(sContentPagerAdapter);
-        sViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(sTabLayout));
-        sTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                sViewPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        /*
-
-        RecyclerView sRecyclerView = (RecyclerView) findViewById(R.id.subjectRecyclerView);
-        LinearLayoutManager sLinearLayoutManager = new LinearLayoutManager(this);
+        RecyclerView sRecyclerView = (RecyclerView) v.findViewById(R.id.subjectRecyclerView);
+        sRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager sLinearLayoutManager = new LinearLayoutManager(getActivity());
         sRecyclerView.setLayoutManager(sLinearLayoutManager);
 
         sList = new ArrayList<>();
 
         sAdapter = new RecyclerAdapter(sList);
+
+        sRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sRecyclerView.setAdapter(sAdapter);
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(sRecyclerView.getContext(), sLinearLayoutManager.getOrientation());
         sRecyclerView.addItemDecoration(dividerItemDecoration);
 
-        sRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), sRecyclerView, new ClickListener() {
+        sRecyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), sRecyclerView, new ClickListener() {
             @Override
             public void onClick(View view, int position) {
                 Subjects subj = sList.get(position);
-                Toast.makeText(getApplicationContext(), subj.getSubject(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), subj.getSubject(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -87,10 +64,24 @@ public class SelectActivity extends AppCompatActivity {
 
             }
         }));
-        */
+
+
+        Button btAddSubject = (Button) v.findViewById(R.id.btAddSubject);
+        //TODO 과목 입력받는 팝업창 띄우기
+        btAddSubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                count++;
+                Subjects data = new Subjects("과목" + count);
+
+                sList.add(data);
+                sAdapter.notifyDataSetChanged();
+            }
+        });
+
+        return v;
     }
 
-/*
     public interface ClickListener {
         void onClick(View view, int position);
 
@@ -100,9 +91,9 @@ public class SelectActivity extends AppCompatActivity {
     public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 
         private GestureDetector gestureDetector;
-        private SelectActivity.ClickListener clickListener;
+        private ClickListener clickListener;
 
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final SelectActivity.ClickListener clickListener) {
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final ClickListener clickListener) {
             this.clickListener = clickListener;
             gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                 @Override
@@ -139,5 +130,13 @@ public class SelectActivity extends AppCompatActivity {
 
     }
 
-    */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        prepareData();
+    }
+
+    private void prepareData() {
+
+    }
 }
