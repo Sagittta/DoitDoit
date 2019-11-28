@@ -1,13 +1,18 @@
 package kr.hs.emirim.sagittta.DoitDoit.Fragment;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,7 +27,6 @@ import java.util.ArrayList;
 
 import kr.hs.emirim.sagittta.DoitDoit.R;
 import kr.hs.emirim.sagittta.DoitDoit.RecyclerAdapter;
-import kr.hs.emirim.sagittta.DoitDoit.SelectActivity;
 import kr.hs.emirim.sagittta.DoitDoit.Subjects;
 
 public class SubjectFragment extends Fragment {
@@ -30,6 +34,15 @@ public class SubjectFragment extends Fragment {
     private ArrayList<Subjects> sList;
     private RecyclerAdapter sAdapter;
     private int count = -1;
+
+    public static final String TAG = "과목 추가창";
+    private Context mContext;
+
+    @Override
+    public void onAttach(final Activity activity) {
+        super.onAttach(activity);
+        mContext = activity;
+    }
 
     @Nullable
     @Override
@@ -71,11 +84,39 @@ public class SubjectFragment extends Fragment {
         btAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                count++;
-                Subjects data = new Subjects("과목" + count);
+                AlertDialog.Builder ad = new AlertDialog.Builder(mContext);
 
-                sList.add(data);
-                sAdapter.notifyDataSetChanged();
+                ad.setTitle("과목 입력");
+
+                final EditText et = new EditText(mContext);
+                ad.setView(et);
+
+                ad.setPositiveButton("추가", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+
+                        Log.v(TAG, "추가 버튼 클릭");
+
+                        String value = et.getText().toString();
+                        Log.v(TAG, value);
+
+                        Subjects data = new Subjects(value);
+
+                        sList.add(data);
+                        sAdapter.notifyDataSetChanged();
+
+                        dialog.dismiss();
+                    }
+                });
+
+                ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        Log.v(TAG, "No Button Click");
+                        dialog.dismiss();
+                    }
+                });
+                ad.show();
             }
         });
 
