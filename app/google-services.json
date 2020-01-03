@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "786951065481",
+    "firebase_url": "https://doitdoit-31c3a.firebaseio.com",
+    "project_id": "doitdoit-31c3a",
+    "storage_bucket": "doitdoit-31c3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786951065481:android:701d89e6a298d8309a1b58",
+        "android_client_info": {
+          "package_name": "kr.hs.emirim.sagittta.DoitDoit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786951065481-unv8s1jqndgrk6q29gblh0l4t7oevvto.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.hs.emirim.sagittta.DoitDoit",
+            "certificate_hash": "1c9d0399c858cad62aade6601c111bbfee8627b3"
+          }
+        },
+        {
+          "client_id": "786951065481-bbav5a6dkelt3ssg5u2dgphhe8q24b52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVZUmYtJGBnjzdQVOOXmB2qhaFmiM-3ck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786951065481-bbav5a6dkelt3ssg5u2dgphhe8q24b52.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">DoitDoit</string>
+
+    <string-array name="category">
+        <item>교과서</item>
+        <item>프린트물</item>
+        <item>자습서</item>
+        <item>문제집</item>
+        <item>노트필기</item>
+    </string-array>
 </resources>

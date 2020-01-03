@@ -18,22 +18,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 import kr.hs.emirim.sagittta.DoitDoit.R;
-import kr.hs.emirim.sagittta.DoitDoit.RecyclerAdapter;
+import kr.hs.emirim.sagittta.DoitDoit.SubjectAdapter;
 import kr.hs.emirim.sagittta.DoitDoit.Subjects;
 
 public class SubjectFragment extends Fragment {
 
     private ArrayList<Subjects> sList;
-    private RecyclerAdapter sAdapter;
-    private int count = -1;
+    private SubjectAdapter sAdapter;
 
     public static final String TAG = "과목 추가창";
     private Context mContext;
@@ -55,9 +62,12 @@ public class SubjectFragment extends Fragment {
         LinearLayoutManager sLinearLayoutManager = new LinearLayoutManager(getActivity());
         sRecyclerView.setLayoutManager(sLinearLayoutManager);
 
+        // firebase
+//        mFirebaseDatabaseReference = FirebaseDatabase.getInstance();
+
         sList = new ArrayList<>();
 
-        sAdapter = new RecyclerAdapter(sList);
+        sAdapter = new SubjectAdapter(sList);
 
         sRecyclerView.setItemAnimator(new DefaultItemAnimator());
         sRecyclerView.setAdapter(sAdapter);
@@ -102,9 +112,31 @@ public class SubjectFragment extends Fragment {
 
                         Subjects data = new Subjects(value);
 
-                        sList.add(data);
-                        sAdapter.notifyDataSetChanged();
+                        if (data.equals("")) {
+                            Log.d("Result : ", "과목 입력");
+                        } else {
 
+                            // Write a message to the database
+//                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//                        DatabaseReference myRef = database.getReference();
+//                        DatabaseReference conditionRef = myRef.child("subject");
+//
+//                        myRef.setValue(data);
+
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString("Subject", value);
+//                            Log.d("INPUT TEXT : ", value);
+//
+//                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//                            AmountFragment amountFragment = new AmountFragment();
+//                            amountFragment.setArguments(bundle);
+//                            fragmentTransaction.replace(R.id.pager_content, amountFragment).commit();
+
+                            sList.add(data);
+                            sAdapter.notifyDataSetChanged();
+                        }
                         dialog.dismiss();
                     }
                 });
